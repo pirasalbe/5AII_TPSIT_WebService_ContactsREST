@@ -63,10 +63,11 @@ public class calculatorServlet extends HttpServlet {
         
         
         String url = request.getRequestURI();
-        if(url.endsWith("add")) url="add";
-        else if(url.endsWith("sub")) url="sub";
-        else if(url.endsWith("mul")) url="mul";
-        else if(url.endsWith("div")) url="div";
+        int uri=0;
+        if(url.endsWith("add")) uri=1;
+        else if(url.endsWith("sub")) uri=2;
+        else if(url.endsWith("mul")) uri=3;
+        else if(url.endsWith("div")) uri=4;
         
         String a = request.getParameter("x"), b = request.getParameter("y");
         int x=0,y=0,z=0;
@@ -84,33 +85,35 @@ public class calculatorServlet extends HttpServlet {
         
         if(converted){
             status=200;
-            error="successfull";
-            switch(url){
-                case "add":
+            error="successful";
+            
+            switch(uri){
+                case 1:
                     z=x+y;
                     break;
-                case "sub":
+                case 2:
                     z=x-y;
                     break;
-                case "mul":
+                case 3:
                     z=x*y;
                     break;
-                case "div":
+                case 4:
                     if(y==0){
                         status=500;
                         error="Can't divide per 0";
                     } else
                         z=x/y;
+                    break;
             }
         }
-        
-        response.sendError(status, error);
-        response.setStatus(status);
         
         if(status!=500)
             try (PrintWriter out = response.getWriter()) {
                 out.println(z);
             }
+        
+        response.setStatus(status);
+        response.sendError(status, error);
     }
 
     /**
