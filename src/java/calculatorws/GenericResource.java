@@ -17,7 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@ApplicationPath("/")
+@ApplicationPath("/calculate")
 public class GenericResource {
 
     @Context
@@ -41,7 +41,18 @@ public class GenericResource {
             case "add":
                 value=x+y;
                 break;
-            case ""
+            case "sub":
+                value=x-y;
+                break;
+            case "div":
+                if(y==0)
+                    value=0;
+                else
+                    value=x/y;
+                break;
+            case "mul":
+                value=x*y;
+                break;
         }
         
         return value;
