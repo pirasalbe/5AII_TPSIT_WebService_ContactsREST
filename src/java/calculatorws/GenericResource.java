@@ -17,7 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@ApplicationPath("/calculate")
+@Path("calculate/{operation}")
 public class GenericResource {
 
     @Context
@@ -30,7 +30,6 @@ public class GenericResource {
     }
     
     @GET
-    @Path("{operation}")
     @Produces("text/plain")
     public int get(@PathParam("operation") String operation,
             @QueryParam("x") int x,
